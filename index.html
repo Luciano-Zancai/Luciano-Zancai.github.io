@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Kiosko Otto Krause</title>
+    <title>Kiosco Otto Krause</title>
     <style>
         body {
             font-family: Arial;
@@ -39,17 +39,17 @@
 </head>
 <body>
 
-<h2 style="color:#FF0000;">productos</h2>
+<h2 style="color:#FF0000;">Productos</h2>
 
 <div>
-    <div class="producto" onclick="agregar('pancho', 1600)">
-        pancho<br>$1600
+    <div class="producto" onclick="agregar('Pancho', 1500)">
+        Pancho<br>$1500
     </div>
-    <div class="producto" onclick="agregar('Papas', 2500)">
-        Papas<br>$2500
+    <div class="producto" onclick="agregar('Manaos Lata', 1000)">
+        Manaos Lata<br>$100
     </div>
-    <div class="producto" onclick="agregar('manaos lata', 1000)">
-        manaos lata<br>$1000
+    <div class="producto" onclick="agregar('Papas', 2000)">
+        Papas<br>$2000
     </div>
 </div>
 
@@ -61,6 +61,28 @@
 
 <button onclick="pagar()">PAGAR</button>
 
+<script>
+    let total = 0;
+
+    function agregar(nombre, precio) {
+        total += precio;
+        document.getElementById('items').innerHTML += 
+            `<div>${nombre} - $${precio}</div>`;
+        document.getElementById('total').innerHTML = 
+            `Total: $${total}`;
+    }
+
+    function pagar() {
+        if(total > 0) {
+            alert(`Pedido confirmado! Total: $${total}`);
+            document.getElementById('items').innerHTML = '';
+            total = 0;
+            document.getElementById('total').innerHTML = 'Total: $0';
+        } else {
+            alert('Agrega productos primero!');
+        }
+    }
+</script>
 
 </body>
 </html>
