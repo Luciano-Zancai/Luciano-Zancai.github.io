@@ -1,85 +1,269 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Kiosco Otto Krause</title>
+    <meta charset="UTF-8">
+    <title>El Kiosco de Mario</title>
     <style>
         body {
-            font-family: Arial;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             max-width: 500px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
         }
+
+        h2 {
+            color: #e65100;
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
         .producto {
-            border: 1px solid #FF0000;
-            padding: 10px;
-            margin: 5px;
+            background: #fff;
+            border: 2px solid #e65100;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin: 10px;
             display: inline-block;
-            width: 120px;
+            width: 130px;
             text-align: center;
             cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
+
+        .producto:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
         #carrito {
-            margin-top: 20px;
-            border-top: 2px solid #FF0000;
-            padding-top: 10px;
+            margin-top: 30px;
+            border-top: 2px solid #e65100;
+            padding-top: 15px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
         }
+
+        #items div {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         #total {
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 15px;
+            font-size: 1.2em;
         }
+
         button {
-            background: #FF0000;
+            background: #e65100;
             color: white;
             border: none;
-            padding: 10px;
-            margin-top: 10px;
+            padding: 12px;
+            margin-top: 20px;
             width: 100%;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #bf360c;
+        }
+
+        /* Estilos para el login */
+        #login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        #kiosco-container {
+            display: none;
+        }
+
+        #error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .eliminar-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .eliminar-btn:hover {
+            background: #cc0000;
         }
     </style>
 </head>
 <body>
 
-<h2 style="color:#FF0000;">Productos</h2>
-
-<div>
-    <div class="producto" onclick="agregar('Pancho', 1500)">
-        Pancho<br>$1500
+<div id="login-container">
+    <h2>🔑 Iniciar Sesión</h2>
+    <div class="input-group">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" placeholder="Ingresa tu usuario">
     </div>
-    <div class="producto" onclick="agregar('Manaos Lata', 1000)">
-        Manaos Lata<br>$100
+    <div class="input-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" placeholder="Ingresa tu contraseña">
     </div>
-    <div class="producto" onclick="agregar('Papas', 2000)">
-        Papas<br>$2000
-    </div>
+    <button onclick="login()">Ingresar</button>
+    <div id="error-message">Usuario o contraseña incorrectos</div>
 </div>
 
-<div id="carrito">
-    <h3>Tu Pedido:</h3>
-    <div id="items"></div>
-    <div id="total">Total: $0</div>
-</div>
+<div id="kiosco-container">
+    <h2>🛒 El Kiosco de Mario</h2>
 
-<button onclick="pagar()">PAGAR</button>
+    <div>
+        <div class="producto" onclick="agregar('Pancho', 1800)">
+            🌭 Pancho<br>$1800
+        </div>
+        <div class="producto" onclick="agregar('Papas', 2000)">
+            🍟 Papas<br>$2000
+        </div>
+        <div class="producto" onclick="agregar('Manaos en lata', 1000)">
+            🥫 Manaos<br>$1000
+        </div>
+        <div class="producto" onclick="agregar('Coca-Cola', 1800)">
+            🥤 Coca-Cola<br>$1800
+        </div>
+        <div class="producto" onclick="agregar('Banana', 600)">
+            🍌 Banana<br>$600
+        </div>
+        <div class="producto" onclick="agregar('Chipá', 1200)">
+            🧀 Chipá<br>$1200
+        </div>
+    </div>
+
+    <div id="carrito">
+        <h3>🧾 Tu Pedido:</h3>
+        <div id="items"></div>
+        <div id="total">Total: $0</div>
+    </div>
+
+    <button onclick="pagar()">💳 PAGAR</button>
+    <button onclick="logout()" style="background: #666; margin-top: 10px;">🔒 Cerrar Sesión</button>
+</div>
 
 <script>
+    // Datos de usuarios válidos (en un caso real esto estaría en el servidor)
+    const usuariosValidos = {
+        "mario": "kiosco123",
+        "cliente": "cliente123",
+        "admin": "admin123"
+    };
+
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        if(usuariosValidos[username] && usuariosValidos[username] === password) {
+            // Login exitoso
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('kiosco-container').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+        } else {
+            // Login fallido
+            document.getElementById('error-message').style.display = 'block';
+        }
+    }
+
+    function logout() {
+        document.getElementById('login-container').style.display = 'block';
+        document.getElementById('kiosco-container').style.display = 'none';
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('error-message').style.display = 'none';
+        
+        // Limpiar carrito al cerrar sesión
+        document.getElementById('items').innerHTML = '';
+        total = 0;
+        document.getElementById('total').innerHTML = 'Total: $0';
+    }
+
+    // Funcionalidad del kiosco
     let total = 0;
+    let items = [];
 
     function agregar(nombre, precio) {
         total += precio;
-        document.getElementById('items').innerHTML += 
-            `<div>${nombre} - $${precio}</div>`;
-        document.getElementById('total').innerHTML = 
-            `Total: $${total}`;
+        const itemId = Date.now(); // ID único para cada item
+        items.push({id: itemId, nombre, precio});
+        
+        const itemElement = document.createElement('div');
+        itemElement.innerHTML = `
+            <span>${nombre} - $${precio}</span>
+            <button class="eliminar-btn" onclick="eliminarItem(${itemId})">X</button>
+        `;
+        itemElement.dataset.id = itemId;
+        document.getElementById('items').appendChild(itemElement);
+        
+        document.getElementById('total').innerHTML = `Total: $${total}`;
+    }
+
+    function eliminarItem(itemId) {
+        const itemIndex = items.findIndex(item => item.id === itemId);
+        if (itemIndex !== -1) {
+            const item = items[itemIndex];
+            total -= item.precio;
+            items.splice(itemIndex, 1);
+            
+            // Actualizar el DOM
+            const itemElement = document.querySelector(`#items div[data-id="${itemId}"]`);
+            if (itemElement) {
+                itemElement.remove();
+            }
+            
+            document.getElementById('total').innerHTML = `Total: $${total}`;
+        }
     }
 
     function pagar() {
         if(total > 0) {
-            alert(`Pedido confirmado! Total: $${total}`);
+            alert(`✅ Pedido confirmado! Total: $${total}`);
             document.getElementById('items').innerHTML = '';
             total = 0;
+            items = [];
             document.getElementById('total').innerHTML = 'Total: $0';
         } else {
-            alert('Agrega productos primero!');
+            alert('⚠️ Agregá productos primero!');
         }
     }
 </script>
